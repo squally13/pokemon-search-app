@@ -1,46 +1,62 @@
+// src/components/FavoritesList.js
 import React from 'react';
-import { removeFavorite } from '../services/api'; // Import API function
+// removeFavorite API call is now handled by App.js
 
-// Pass favorites and handler
-function FavoritesList({ favorites, onRemoveFavoriteSuccess }) {
+// Receive onAttemptRemoveFavorite prop
+function FavoritesList({ favorites, allPokemonList, onSelectFavorite, onAttemptRemoveFavorite }) {
 
-    const handleRemove = async (favId, favName) => {
-         // Optional: Add confirmation dialog
-         if (window.confirm(`Are you sure you want to remove ${favName} from favorites?`)) {
-             try {
-                 const response = await removeFavorite(favId);
-                 if (response.data.success) {
-                     alert('Favorite removed!'); // Or use a better notification system
-                     onRemoveFavoriteSuccess(favId); // Notify parent component to update state
-                 } else {
-                      alert(response.data.message || 'Failed to remove favorite.');
-                 }
-             } catch (error) {
-                  console.error("Remove favorite error:", error);
-                  alert(error.response?.data?.message || error.message || 'An error occurred.');
-             }
-         }
+    const handleRemoveClick = (favId, favName) => {
+        // Call the handler passed from App.js, which will handle confirmation, API call, and notification
+        onAttemptRemoveFavorite(favId, favName);
     };
 
     if (!favorites || favorites.length === 0) {
-        // Use a specific class for styling empty message if needed
         return <p className="empty-list-message">Your favorites list is empty.</p>;
     }
 
     return (
-        // The wrapping div might not even be necessary if it just contains the list
-        // <div className="FavoritesList"> Remove if it's just the list
-            <ul>
-                {favorites.map(fav => (
+        <ul className="FavoritesListUL">
+            {favorites.map(fav => {
+                const pokemonDetails = allPokemonList.find(
+                    p => p.name.toLowerCase() === fav.pokemon_name.toLowerCase()
+                );
+                const spriteUrl = pokemonDetails ? pokemonDetails.spriteUrl : '/placeholder.png';
+                const pokeApiId = pokemonDetails ? pokemonDetails.id : null;
+
+                return (
                     <li key={fav.id}>
-                        {fav.pokemon_name}
-                        <button onClick={() => handleRemove(fav.id, fav.pokemon_name)} style={{marginLeft: '10px'}}>
+                        <div className="favorite-item-info">
+                            <img
+                                src={spriteUrl}
+                                alt={fav.pokemon_name}
+                                className="favorite-item-sprite"
+                            />
+                            <span
+                                className="favorite-item-name"
+                                onClick={() => onSelectFavorite(fav.pokemon_name)}
+                                role="button"
+                                tabIndex={0}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                        e.preventDefault();
+                                        onSelectFavorite(fav.pokemon_name);
+                                    }
+                                }}
+                            >
+                                {fav.pokemon_name}
+                                {pokeApiId && <span className="favorite-item-pokeapi-id"> (#{pokeApiId})</span>}
+                            </span>
+                        </div>
+                        <button
+                            onClick={() => handleRemoveClick(fav.id, fav.pokemon_name)}
+                            className="remove-favorite-button"
+                        >
                             Remove
                         </button>
                     </li>
-                ))}
-            </ul>
-        // </div>
+                );
+            })}
+        </ul>
     );
 }
 

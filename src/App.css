@@ -29,19 +29,36 @@ body {
 }
 
 /* --- General Headings --- */
-/* Default alignment for h2, h3 */
+h1 {
+    font-size: 3em;
+    color: #FFCC00; /* Pokémon Yellow */
+    text-shadow:
+        -3px -3px 0 #3B4CCA,  /* Top-left */
+         3px -3px 0 #3B4CCA,  /* Top-right */
+        -3px  3px 0 #3B4CCA,  /* Bottom-left */
+         3px  3px 0 #3B4CCA,  /* Bottom-right */
+        -3px  0   0 #3B4CCA,  /* Left */
+         3px  0   0 #3B4CCA,  /* Right */
+         0   -3px 0 #3B4CCA,  /* Top */
+         0    3px 0 #3B4CCA;  /* Bottom */
+    text-align: center;
+    font-weight: 700; /* Roboto Bold */
+    letter-spacing: 2px;
+    margin-top: 30px;
+    margin-bottom: 35px;
+}
+
 h2, h3 {
     text-align: center;
     color: #333;
+    margin-top: 20px; /* Default top margin for subheadings */
+    margin-bottom: 15px; /* Default bottom margin for subheadings */
 }
-/* Specific alignment and margins for h1 */
-h1 {
-    color: #333;
-    text-align: left;
-    margin-top: 40px; /* Push down from top */
-    margin-bottom: 30px;
-    padding-left: 20px; /* Indent slightly */
+/* Specific margin for section titles if needed */
+section > h2 {
+    margin-top: 0; /* Remove top margin if h2 is first child of section */
 }
+
 
 /* --- Sections --- */
 section {
@@ -59,73 +76,148 @@ section:last-child {
   position: absolute;
   top: 25px;
   right: 20px;
-  font-size: 0.9em; /* Consistent font size */
+  font-size: 0.9em;
 }
 
 .user-info span {
-     margin-right: 10px;
-     color: #555;
-     vertical-align: middle; /* Align text with button */
+    margin-right: 10px;
+    color: #555;
+    vertical-align: middle;
 }
 
 .user-info button,
-.auth-links a.auth-button-link { /* Style both logout button and login link similarly */
-     padding: 5px 10px;
-     color: white;
-     border: none;
-     border-radius: 3px;
-     cursor: pointer;
-     vertical-align: middle; /* Align button/link with text */
-     text-decoration: none; /* Remove underline from link */
-     font-size: 1em; /* Inherit font-size from parent */
-     transition: background-color 0.2s ease;
+.auth-links a.auth-button-link {
+    padding: 5px 10px;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    vertical-align: middle;
+    text-decoration: none;
+    font-size: 1em; /* Relative to parent (.user-info / .auth-links) */
+    transition: background-color 0.2s ease;
 }
-/* Specific background colors */
 .user-info button { background-color: #95a5a6; } /* Gray */
 .auth-links a.auth-button-link { background-color: #e67e22; } /* Orange */
 
-/* Hover states */
 .user-info button:hover { background-color: #7f8c8d; }
 .auth-links a.auth-button-link:hover { background-color: #d35400; }
 
 
 /* --- SearchBar Component Styles --- */
-/* Assuming SearchBar component wraps its form/input in a div with class="SearchBar" */
+.SearchBar {
+  display: flex;
+  justify-content: center;
+}
+
 .SearchBar form {
-    margin-bottom: 20px; /* Space below the form */
-    display: flex;
-    justify-content: center;
+    display: flex; /* Aligns input and button horizontally */
+    align-items: stretch; /* Makes input and button same height */
+    position: relative; /* CRUCIAL: For absolute positioning of .suggestions-list */
+    /* The form will now be as wide as its content (input + button) */
 }
-/* Make this rule SPECIFIC to SearchBar's text input */
+
 .SearchBar input[type="text"] {
-    padding: 12px 15px; /* INCREASED padding (e.g., from 10px) */
-    margin-right: 5px;
-    min-width: 250px; /* Keep or adjust min-width */
+    padding: 12px 15px;
+    margin-right: 0; /* No margin, button is directly adjacent */
+    min-width: 250px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 1em; /* INCREASED font-size (e.g., from default) */
-    /* box-sizing: border-box; <- Applied globally */
+    border-right: none; /* Remove right border for seamless connection with button */
+    border-radius: 5px 0 0 5px; /* Round left corners */
+    font-size: 1em;
+    position: relative;
+    z-index: 2;
 }
+
+.SearchBar input[type="text"]::placeholder {
+    font-size: 0.85em;
+    color: #999;
+}
+
 .SearchBar button {
-    padding: 12px 20px; /* Adjusted padding to match input height better */
+    padding: 12px 20px;
     cursor: pointer;
-    background-color: #3498db; /* Blue */
+    background-color: #3498db;
     color: white;
-    border: none;
-    border-radius: 5px; /* Slightly more rounded */
-    font-size: 1em; /* Match input font size */
-    font-weight: 500; /* Medium weight */
-    letter-spacing: 0.5px; /* Slight letter spacing */
-    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease; /* Smooth transitions */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    border: 1px solid #3498db; /* Add border to match input's border width */
+    border-left: none; /* Remove left border for seamless connection */
+    border-radius: 0 5px 5px 0; /* Round right corners */
+    font-size: 1em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 2;
 }
 .SearchBar button:hover {
-    background-color: #2980b9; /* Darker blue */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Enhanced shadow */
+    background-color: #2980b9;
+    border-color: #2980b9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 .SearchBar button:active {
-    transform: translateY(1px); /* Slight press effect */
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* Reduced shadow */
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Styles for SearchBar Suggestions --- */
+.suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0; /* Reset margin */
+    position: absolute;
+    top: 100%; /* Position it right below the form (its parent) */
+    left: 0; /* Align to the left edge of the form */
+    width: 100%; /* Take full width of the form */
+  
+    background-color: #fff;
+    border: 1px solid #ddd;
+    /* border-top: none; /* Keep top border for separation if form has no bottom border */
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.12);
+    z-index: 1000;
+    max-height: 280px;
+    overflow-y: auto;
+    text-align: left;
+  }
+
+  .suggestion-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.15s ease;
+}
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+.suggestion-item:hover {
+    background-color: #f5f5f5;
+}
+.suggestion-sprite {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    object-fit: contain;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+}
+.suggestion-id {
+    color: #888;
+    font-size: 0.8em;
+    margin-right: 8px;
+    min-width: 35px;
+    font-family: monospace;
+}
+.suggestion-name {
+    font-weight: 500;
+    text-transform: capitalize;
+    color: #333;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 
@@ -141,13 +233,13 @@ section:last-child {
 .pokemon-card h2 {
      text-transform: capitalize;
      margin-bottom: 15px;
-     text-align: center; /* Center Pokemon name */
+     text-align: center;
  }
 .pokemon-card img {
     display: block;
     margin: 0 auto 15px auto;
-    width: 150px; /* Increased size */
-    height: 150px; /* Increased size */
+    width: 150px;
+    height: 150px;
     background-color: #e8e8e8;
     border-radius: 50%;
     border: 2px solid #fff;
@@ -155,7 +247,7 @@ section:last-child {
 }
 .pokemon-card .pokemon-info-section {
   margin-bottom: 15px;
-  text-align: center; /* Center section labels */
+  text-align: center;
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -169,7 +261,7 @@ section:last-child {
   list-style: none;
   padding: 0;
   margin: 0;
-  text-align: center; /* Center list items */
+  text-align: center;
 }
 .pokemon-card .pokemon-info-section ul li {
     font-size: 0.9em;
@@ -179,17 +271,15 @@ section:last-child {
     margin: 3px;
     border-radius: 4px;
 }
-/* Background for stats/abilities list items */
 .pokemon-card .stats-list li,
 .pokemon-card .abilities-list li {
   background-color: #eee;
   color: #333;
 }
-/* Generation number badge */
 .generation-number {
   display: inline-block;
-  background-color: #e0e0e0; /* Light gray background */
-  color: black; /* Black text */
+  background-color: #e0e0e0;
+  color: black;
   font-weight: bold;
   font-size: 1.1em;
   padding: 4px 10px;
@@ -200,23 +290,21 @@ section:last-child {
   vertical-align: middle;
   box-shadow: 0 1px 2px rgba(0,0,0,0.15);
 }
-/* Favorite star indicator */
 .pokemon-card .favorite-star {
     display: block;
     margin-top: 15px;
-    text-align: center; /* Center the star text */
+    text-align: center;
     font-weight: bold;
     color: #f1c40f;
     font-size: 1.1em;
 }
-/* Add to favorites button within the card */
 .pokemon-card button {
     display: block;
-    width: calc(100% - 40px); /* Adjust width considering card padding */
-    margin: 15px auto 0 auto; /* Center button */
+    width: calc(100% - 40px);
+    margin: 15px auto 0 auto;
     padding: 10px 15px;
     cursor: pointer;
-    background-color: #2ecc71; /* Green button */
+    background-color: #2ecc71; /* Green */
     color: white;
     border: none;
     border-radius: 4px;
@@ -228,27 +316,20 @@ section:last-child {
 
 
 /* --- AuthForms Component Styles --- */
-/* Wrapper section for Auth forms (used on /auth route) */
 .auth-section {
     margin-top: 30px;
     padding: 20px;
-    position: relative;
-    padding-bottom: 70px;
-    /* Optional: Add border/background back if desired */
-    /* border: 1px solid #ddd; */
-    /* border-radius: 8px; */
-    /* background-color: #f9f9f9; */
+    position: relative; /* For positioning close button */
+    padding-bottom: 70px; /* Space for close button */
 }
 .auth-section h2 {
-    text-align: center;
+    /* text-align: center; <- Already global for h2 */
     margin-top: 0;
     margin-bottom: 20px;
 }
-/* Container for the forms themselves */
 .AuthForms {
-    /* Optional: Add styling if AuthForms component has this class on its root */
     max-width: 400px;
-    margin: 0 auto; /* Center form if it has max-width */
+    margin: 0 auto;
 }
 .AuthForms div { /* Wrapper for label+input */
     margin-bottom: 15px;
@@ -259,36 +340,32 @@ section:last-child {
     font-weight: bold;
     color: #555;
 }
-/* ** CRITICAL FIX ** */
-/* Style BOTH input types within AuthForms consistently */
 .AuthForms input[type="text"],
 .AuthForms input[type="password"] {
     width: 100%;
-    padding: 12px 15px; /* INCREASED padding (make consistent with SearchBar) */
+    padding: 12px 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 1em; /* INCREASED font-size (make consistent with SearchBar) */
-    /* box-sizing: border-box; <- Applied globally */
+    font-size: 1em;
 }
-/* Submit button */
 .AuthForms button[type="submit"] {
     width: 100%;
-    padding: 12px 20px; /* Consistent padding */
-    margin-top: 15px; /* Adjusted space above */
+    padding: 12px 20px;
+    margin-top: 15px;
     cursor: pointer;
     background-color: #e67e22; /* Orange */
     color: white;
     border: none;
     border-radius: 5px;
-    font-size: 1.05em; /* Slightly larger */
+    font-size: 1.05em;
     font-weight: 500;
     letter-spacing: 0.5px;
-    text-transform: uppercase; /* Uppercase text */
+    text-transform: uppercase;
     transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .AuthForms button[type="submit"]:hover {
-    background-color: #d35400; /* Darker orange */
+    background-color: #d35400;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 .AuthForms button[type="submit"]:active {
@@ -301,15 +378,14 @@ section:last-child {
     cursor: not-allowed;
     transform: none;
 }
-/* Switch auth mode button */
-.AuthForms button:not([type="submit"]) {
+.AuthForms button:not([type="submit"]) { /* Switch auth mode button */
     display: block;
     width: 100%;
     margin-top: 15px;
-    padding: 10px 15px; /* Slightly less padding than primary */
-    background-color: #ecf0f1; /* Light gray background */
-    border: 1px solid #bdc3c7; /* Subtle border */
-    color: #34495e; /* Darker text */
+    padding: 10px 15px;
+    background-color: #ecf0f1; /* Light gray */
+    border: 1px solid #bdc3c7;
+    color: #34495e;
     cursor: pointer;
     border-radius: 5px;
     text-align: center;
@@ -318,73 +394,139 @@ section:last-child {
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 .AuthForms button:not([type="submit"]):hover {
-    background-color: #dfe6e9; /* Slightly darker gray */
+    background-color: #dfe6e9;
     border-color: #95a5a6;
 }
- .AuthForms button:not([type="submit"]):active {
+.AuthForms button:not([type="submit"]):active {
     transform: translateY(1px);
 }
-
-/* Auth message styling */
-.AuthForms p {
+.AuthForms p { /* Message styling */
     margin-top: 15px;
     text-align: center;
     font-weight: bold;
-    color: #c0392b; /* Default error color */
 }
+/* Specific message colors */
+.AuthForms p.error { color: #c0392b; } /* Assuming messages get 'error' or 'success' class */
 .AuthForms p.success { color: #27ae60; }
 
 
 /* --- FavoritesList Component Styles --- */
-.FavoritesList { /* Style if FavoritesList component wraps ul in a div */
-     margin-top: 20px;
-}
-.FavoritesList h3 { /* Heading removed from component, style h2 in section instead */
-     /* margin-bottom: 15px; */
-}
-.FavoritesList ul {
+/* Usuwamy klasę .FavoritesList, bo teraz stylujemy bezpośrednio ul lub dodajemy nową klasę dla ul */
+/* .FavoritesList { margin-top: 20px; } */
+
+ul.FavoritesListUL { /* Nowa klasa dla elementu UL */
     list-style: none;
     padding: 0;
+    margin-top: 20px; /* Zachowaj margines górny */
 }
-.FavoritesList li {
+
+/* Istniejąca reguła dla li, ale z modyfikacjami dla flexbox */
+.FavoritesListUL li { /* Zmieniony selektor na ul.FavoritesListUL li */
     padding: 10px 15px;
     border-bottom: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-transform: capitalize;
+    display: flex; /* UŻYJ FLEXBOX DO ROZMIESZCZENIA ELEMENTÓW */
+    justify-content: space-between; /* Rozsuń info i przycisk */
+    align-items: center; /* Wyśrodkuj w pionie */
+    text-transform: capitalize; /* To załatwia wielką literę w nazwie */
     background-color: #fff;
-    margin-bottom: 5px;
-    border-radius: 4px;
+    margin-bottom: 8px; /* Zwiększony odstęp między elementami */
+    border-radius: 6px; /* Bardziej zaokrąglone rogi */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Subtelny cień */
+    transition: background-color 0.15s ease, transform 0.15s ease;
 }
-.FavoritesList li:last-child { border-bottom: none; }
+.FavoritesListUL li:hover {
+    background-color: #f9f9f9;
+    transform: translateY(-1px); /* Lekkie uniesienie przy najechaniu */
+}
+.FavoritesListUL li:last-child {
+    border-bottom: none;
+}
 
-/* Remove button in favorites */
-.FavoritesList button {
-    padding: 4px 8px;
+/* NOWE: Style dla lewej części elementu listy (obrazek + nazwa) */
+.favorite-item-info {
+    display: flex; /* Ułóż obrazek i nazwę obok siebie */
+    align-items: center; /* Wyśrodkuj w pionie */
+    gap: 12px; /* Odstęp między obrazkiem a blokiem nazwy/ID */
+    flex-grow: 1; /* Pozwól tej części zająć dostępną przestrzeń */
+    min-width: 0; /* Ważne dla flexbox, aby text-overflow działał */
+}
+
+.favorite-item-sprite {
+    width: 48px; /* Nieco większy obrazek */
+    height: 48px;
+    object-fit: contain;
+    background-color: #f0f0f0;
+    border-radius: 50%; /* Okrągły obrazek */
+    border: 1px solid #e7e7e7; /* Subtelna ramka */
+    flex-shrink: 0; /* Zapobiegaj kurczeniu się obrazka */
+}
+
+.favorite-item-name {
+    font-weight: 500;
+    color: #2980b9; /* Kolor sugerujący klikalność */
+    cursor: pointer;
+    transition: color 0.15s ease;
+    white-space: nowrap; /* Zapobiegaj łamaniu linii */
+    overflow: hidden; /* Ukryj nadmiarowy tekst */
+    text-overflow: ellipsis; /* Dodaj wielokropek */
+}
+.favorite-item-name:hover {
+    color: #1c5a84; /* Ciemniejszy przy najechaniu */
+    text-decoration: underline;
+}
+.favorite-item-pokeapi-id {
     font-size: 0.8em;
-    background-color: #e74c3c; /* Red */
+    color: #777;
+    margin-left: 5px; /* Odstęp od nazwy */
+    font-weight: 400; /* Normalna waga dla ID */
+}
+
+
+/* ZAKTUALIZOWANE: Style dla przycisku "Remove" */
+/* Używamy bardziej specyficznego selektora */
+.FavoritesListUL li button.remove-favorite-button {
+    padding: 7px 14px; /* Zwiększony padding */
+    font-size: 0.88em; /* Nieco większa czcionka */
+    background-color: #e74c3c; /* Czerwony */
     border: none;
     color: white;
-    border-radius: 3px;
+    border-radius: 5px; /* Spójne zaokrąglenie */
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    font-weight: 500; /* Pogrubienie */
+    letter-spacing: 0.3px; /* Lekki odstęp */
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    flex-shrink: 0; /* Zapobiegaj kurczeniu się przycisku */
 }
-.FavoritesList button:hover { background-color: #c0392b; }
-p.empty-list-message { /* Style for empty favorites message */
+.FavoritesListUL li button.remove-favorite-button:hover {
+    background-color: #c0392b; /* Ciemniejszy czerwony */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+}
+.FavoritesListUL li button.remove-favorite-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+}
+
+/* Styl dla komunikatu o pustej liście ulubionych (bez zmian, ale upewnij się, że jest) */
+p.empty-list-message {
     text-align: center;
     color: #777;
     margin-top: 15px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
 }
 
+/* Reszta twojego pliku App.css ... */
+
 /* --- Utility Styles --- */
-/* Loading / Error Messages */
+/* Loading / Error Messages (general for sections) */
 p.loading-message, p.error-message {
     text-align: center;
     padding: 15px;
-    margin: 20px auto; /* Auto margins for centering */
+    margin: 20px auto;
     border-radius: 4px;
-    max-width: 80%; /* Prevent full width messages */
+    max-width: 80%;
 }
 p.loading-message {
     color: #555;
@@ -396,29 +538,95 @@ p.error-message {
      font-weight: bold;
 }
 
-/* Close/Back Button Styling (reusable) */
+/* Close/Back Button Styling (reusable for links styled as buttons) */
 .close-auth-button {
-    /* display: inline-block; <- Change or remove if using absolute */
-    /* width: auto; <- Width defined by content and padding */
-    /* margin: 20px auto 0 auto; <- Remove centering margin */
-
-    /* --- Add Absolute Positioning --- */
     position: absolute;
-    bottom: 20px; /* Distance from bottom of .auth-section */
-    right: 20px;  /* Distance from right of .auth-section */
-    /* --- End of Absolute Positioning --- */
-
-    padding: 8px 16px; /* Keep padding */
+    bottom: 20px;
+    right: 20px;
+    padding: 8px 16px;
     background-color: #95a5a6; /* Gray */
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.9em;
-    text-decoration: none; /* If used on a link */
-    text-align: center; /* Center text within the button/link */
-    transition: background-color 0.2s ease; /* Keep transition */
+    text-decoration: none; /* For <Link> components */
+    text-align: center;
+    transition: background-color 0.2s ease;
 }
 .close-auth-button:hover {
      background-color: #7f8c8d;
 }
+
+/* src/App.css */
+
+/* --- App Notification Styles --- */
+.app-notification {
+    position: fixed; /* Fixed position on the viewport */
+    top: 20px;       /* Distance from top */
+    right: 20px;      /* Distance from right */
+    padding: 14px 22px;
+    border-radius: 6px;
+    color: #fff; /* White text by default */
+    font-size: 0.95em;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* More pronounced shadow */
+    z-index: 2000; /* Ensure it's above all other content */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 280px;
+    max-width: 450px;
+    opacity: 0; /* Start hidden for animation */
+    transform: translateY(-30px); /* Start above for slide-in animation */
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    pointer-events: none; /* Initially not interactive to prevent blocking elements underneath */
+  }
+  
+  /* Class to show the notification with animation */
+  .app-notification.show {
+    opacity: 1;
+    transform: translateY(0); /* Slide into view */
+    pointer-events: auto; /* Make interactive when shown */
+  }
+  
+  /* Different types of notifications */
+  .app-notification.success {
+    background-color: #2ecc71; /* Green */
+    border-left: 5px solid #27ae60; /* Darker green accent */
+  }
+  
+  .app-notification.error {
+    background-color: #e74c3c; /* Red */
+    border-left: 5px solid #c0392b; /* Darker red accent */
+  }
+  
+  .app-notification.info {
+    background-color: #3498db; /* Blue (original "info") */
+    border-left: 5px solid #2980b9; /* Darker blue accent */
+  }
+  
+  /* --- NEW STYLE for "warning" type notification (orange) --- */
+  .app-notification.warning {
+    background-color: #e67e22; /* Orange (like the Login/Register button) */
+    border-left: 5px solid #d35400; /* Darker orange accent */
+  }
+  
+  /* Close button for the notification */
+  .notification-close-button {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.8); /* Slightly transparent white */
+    font-size: 1.5em; /* Larger 'x' */
+    font-weight: bold;
+    line-height: 1; /* Ensure proper vertical alignment of 'x' */
+    margin-left: 15px;
+    padding: 0 5px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+  }
+  .notification-close-button:hover {
+    opacity: 1;
+    color: #fff; /* Solid white on hover */
+  }

@@ -10,6 +10,27 @@ const apiClient = axios.create({
 // PokeAPI base URL
 const pokeApiUrl = 'https://pokeapi.co/api/v2';
 
+export const fetchAllPokemonForSuggestions = async (limit = 1302) => { // Current approx total Pokémon
+    try {
+        const response = await axios.get(`${pokeApiUrl}/pokemon?limit=${limit}`);
+        const pokemonList = response.data.results.map(pokemon => {
+            // Extract ID from the URL (e.g., "https://pokeapi.co/api/v2/pokemon/1/")
+            const urlParts = pokemon.url.split('/');
+            const id = urlParts[urlParts.length - 2]; // ID is the second to last part
+            return {
+                id: parseInt(id),
+                name: pokemon.name,
+                // Construct sprite URL using a common source like raw.githubusercontent
+                spriteUrl: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`
+            };
+        });
+        return pokemonList;
+    } catch (error) {
+        console.error("Error fetching all Pokémon for suggestions:", error);
+        throw new Error('Failed to fetch Pokémon list for suggestions.');
+    }
+};
+
 // --- PokeAPI Functions ---
 export const searchPokemon = async (pokemonNameOrId) => {
     try {

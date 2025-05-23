@@ -1,4 +1,4 @@
-# Pokémon Database & Favorites App
+# Pokémon Search App
 
 A single-page web application built with React, PHP, and MySQL that allows users to search for Pokémon, view their details, create an account, and manage a personal list of favorite Pokémon. The application utilizes the public PokeAPI for Pokémon data.
 
@@ -117,34 +117,6 @@ Before you begin, ensure you have the following installed:
         ```
     * This will typically open the application automatically in your default web browser at `http://localhost:3000`. If not, open it manually.
 
-## Project Structure (Overview)
-
-/pokemon_project_root
-├── /pokemon_api/                 # Backend PHP files
-│   ├── db_connect.php
-│   ├── register.php
-│   ├── login.php
-│   ├── logout.php
-│   ├── check_session.php
-│   └── favorites.php
-└── /pokemon-search-app/          # Frontend React application (e.g., created with Create React App)
-├── public/
-├── src/
-│   ├── components/           # Reusable React components
-│   │   ├── AuthForms.js
-│   │   ├── FavoritesList.js
-│   │   ├── PokemonCard.js
-│   │   └── SearchBar.js
-│   ├── services/             # API interaction logic
-│   │   └── api.js
-│   ├── App.js                # Main application component with routing
-│   ├── App.css               # Main application styles
-│   ├── index.js              # Entry point for React app
-│   └── index.css             # Global styles
-├── package.json
-└── README.md                 # This file
-
-
 ## Backend API Endpoints
 
 The PHP backend provides the following API endpoints (relative to your `pokemon_api` folder, e.g., `http://localhost/pokemon_api/login.php`):
@@ -156,17 +128,3 @@ The PHP backend provides the following API endpoints (relative to your `pokemon_
 * `GET /favorites.php`: Retrieves the logged-in user's favorite Pokémon.
 * `POST /favorites.php`: Adds a Pokémon to the logged-in user's favorites. Expects `pokemon_name`.
 * `DELETE /favorites.php`: Removes a Pokémon from favorites. Expects favorite `id` as a query parameter (e.g., `/favorites.php?id=123`).
-
-## Future Enhancements (To-Do)
-
-* More detailed Pokémon information (e.g., evolutions, move sets, locations).
-* Advanced search and filtering options (by type, generation, etc.).
-* User profile page.
-* Password reset functionality.
-* Enhanced UI/UX with more animations and transitions.
-* Pagination for the main Pokémon list (if ever implemented) and favorites list.
-* Debouncing for the search suggestions input for better performance.
-* Loading skeletons for a smoother loading experience.
-* Comprehensive error handling and user feedback.
-* Unit and integration tests.
-* Deployment scripts/guide for a live server.

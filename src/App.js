@@ -113,7 +113,7 @@ function App() {
             if (response.data.success) {
                 setFavorites(prev => prev.filter(f => f.id !== favId));
                 const capName = favName.charAt(0).toUpperCase() + favName.slice(1);
-                showAppNotification(<><strong>{capName}</strong> removed from favorites.</>, "warning");
+                showAppNotification(<>{capName} removed from favorites.</>, "warning");
             } else showAppNotification(response.data.message || 'Failed to remove favorite.', "error");
         } catch (error) { console.error("Remove favorite error:", error); showAppNotification(error.message || 'An error occurred.', "error"); }
     };
@@ -213,7 +213,7 @@ function App() {
             {/* --- Right Sidebar - Conditionally Rendered --- */}
             {location.pathname !== '/auth' && ( // Only show sidebar if not on auth page
                 <aside className="pokemon-sidebar">
-                    <h2>All Pokémon</h2>
+                    <h2>All Pokémons</h2>
                     <AllPokemonList
                         allPokemonList={allPokemonForSuggestions}
                         onPokemonSelect={handleSearch} // Clicking a Pokémon in sidebar searches it

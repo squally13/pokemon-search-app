@@ -1,4 +1,3 @@
-/* src/App.css */
 /* --- Google Font Import --- */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
@@ -175,10 +174,6 @@ p.error-message { color: #c0392b; background-color: #fadbd8; font-weight: bold; 
     padding-bottom: 10px;
 }
 
-.all-pokemon-list-container {
-    /* Wrapper for list and pagination within sidebar */
-}
-
 .all-pokemon-list {
     list-style: none;
     padding: 0;
@@ -248,11 +243,6 @@ p.error-message { color: #c0392b; background-color: #fadbd8; font-weight: bold; 
     /* margin-right: auto; <-- REMOVE THIS LINE if it exists, rely on parent's justify-content */
 }
 
-.all-pokemon-list-gen {
-    /* No specific alignment style needed here if parent uses space-between */
-    /* text-align: right; This would align text within the span, but span width is content-based */
-}
-
 /* Pagination Controls for Sidebar List */
 .pagination-controls {
     display: flex;
@@ -275,16 +265,6 @@ p.error-message { color: #c0392b; background-color: #fadbd8; font-weight: bold; 
     transition: background-color 0.2s ease, border-color 0.2s ease;
     margin: 0 3px; /* UPDATED: Added small horizontal margin to all pagination elements */
 }
-
-/* Optional: Slightly more distinct spacing for Prev/Next if the general margin isn't enough */
-/* If you want PREV and NEXT to have a bit more space from the number block: */
-.pagination-controls button:first-of-type {
-    /* margin-right: 6px; /* Example: uncomment and adjust if needed */
-}
-.pagination-controls button:last-of-type {
-    /* margin-left: 6px; /* Example: uncomment and adjust if needed */
-}
-
 
 .pagination-controls button:hover:not(:disabled) {
     background-color: #e9ecef;

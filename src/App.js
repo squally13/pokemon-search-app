@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState, useEffect, useCallback } from 'react';
 import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
 import './App.css';
@@ -15,7 +14,7 @@ import SearchBar from './components/SearchBar';
 import PokemonCard from './components/PokemonCard';
 import AuthForms from './components/AuthForms';
 import FavoritesList from './components/FavoritesList';
-import AllPokemonList from './components/AllPokemonList'; // --- NOWY IMPORT KOMPONENTU ---
+import AllPokemonList from './components/AllPokemonList';
 
 function App() {
     // --- State Variables ---

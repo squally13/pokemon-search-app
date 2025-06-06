@@ -1,4 +1,4 @@
-# Pokémon Database & Advanced Favorites App
+# Pokémon Database App
 
 A comprehensive single-page web application built with React, PHP, and MySQL. This application allows users to search for Pokémon, view detailed information, receive live search suggestions, browse a paginated list of all Pokémon in a sidebar, create user accounts, and manage a personal list of favorite Pokémon with custom on-page notifications. It utilizes the public PokeAPI for Pokémon data.
 
